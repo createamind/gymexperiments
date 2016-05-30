@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 import argparse
 import gym
 from gym.spaces import Box, Discrete
@@ -55,7 +57,7 @@ print "num_actuators:", num_actuators
 
 # start monitor for OpenAI Gym
 if args.gym_record:
-  env.monitor.start(args.gym_record)
+  env.monitor.start(args.gym_record,force=True)
 
 # optional norm constraint
 if args.max_norm:
@@ -282,7 +284,7 @@ for i_episode in xrange(args.episodes):
         if done:
             break
 
-    print "Episode {} finished after {} timesteps, reward {}".format(i_episode + 1, t + 1, episode_reward)
+    logger.warn("Episode {} finished after {} timesteps, reward {}".format(i_episode + 1, t + 1, episode_reward))
     total_reward += episode_reward
     B.new_episode()
 
